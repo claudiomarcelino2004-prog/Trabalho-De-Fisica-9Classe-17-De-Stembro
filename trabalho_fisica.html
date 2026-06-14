@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trabalho de Física – Máquinas Simples & Óptica</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --azul-escuro: #1a2e4a;
+    --azul-medio: #2d5986;
+    --azul-claro: #e8f0fb;
+    --verde: #2e7d52;
+    --verde-claro: #e6f4ec;
+    --amarelo: #f5a623;
+    --cinza-texto: #2c2c2c;
+    --cinza-fundo: #f7f8fa;
+    --linha: #d0d8e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cinza-fundo);
+    color: var(--cinza-texto);
+    line-height: 1.7;
+    padding: 20px;
+  }
+
+  .capa {
+    background: var(--azul-escuro);
+    color: white;
+    border-radius: 12px;
+    padding: 48px 40px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .capa h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .capa .subtitulo {
+    font-size: 1rem;
+    opacity: 0.75;
+    margin-bottom: 24px;
+  }
+
+  .capa .meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    opacity: 0.85;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 20px;
+  }
+
+  .capa .meta span { display: flex; flex-direction: column; align-items: center; }
+  .capa .meta strong { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 4px; }
+
+  .unidade-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--azul-medio);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    margin: 32px 0 20px;
+    font-family: 'Merriweather', serif;
+    font-size: 1.1rem;
+  }
+
+  .unidade-titulo .num {
+    background: rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .exercicio {
+    background: white;
+    border-radius: 10px;
+    border-left: 5px solid var(--azul-medio);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+
+  .exercicio.verde { border-left-color: var(--verde); }
+
+  .pergunta {
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--azul-escuro);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--linha);
+  }
+
+  .pergunta .num-q {
+    display: inline-block;
+    background: var(--azul-medio);
+    color: white;
+    border-radius: 5px;
+    padding: 1px 9px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+  }
+
+  .exercicio.verde .pergunta .num-q { background: var(--verde); }
+
+  .resposta {
+    font-size: 0.95rem;
+    color: #333;
+  }
+
+  .resposta p { margin-bottom: 10px; }
+
+  .formula {
+    background: var(--azul-claro);
+    border: 1px solid #b8d0f0;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    text-align: center;
+    margin: 12px 0;
+    color: var(--azul-escuro);
+    font-weight: 600;
+  }
+
+  .formula.verde-bg {
+    background: var(--verde-claro);
+    border-color: #a8d5b8;
+    color: var(--verde);
+  }
+
+  .destaque {
+    background: #fff8e6;
+    border: 1px solid #f0d080;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 10px 0;
+    font-weight: 600;
+    color: #7a5500;
+    font-size: 0.95rem;
+  }
+
+  .destaque::before { content: "✅ "; }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.9rem;
+  }
+
+  .tabela th {
+    background: var(--azul-escuro);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .tabela td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .tabela tr:nth-child(even) td { background: var(--azul-claro); }
+
+  .passo {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 8px 0;
+  }
+
+  .passo .bolinha {
+    min-width: 26px;
+    height: 26px;
+    background: var(--azul-medio);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .exercicio.verde .passo .bolinha { background: var(--verde); }
+
+  ul.lista { padding-left: 20px; }
+  ul.lista li { margin-bottom: 6px; }
+
+  .rodape {
+    text-align: center;
+    padding: 28px;
+    font-size: 0.82rem;
+    color: #888;
+    border-top: 1px solid var(--linha);
+    margin-top: 40px;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .capa { border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="capa">
+  <h1>Trabalho de Física</h1>
+  <p class="subtitulo">Máquinas Simples · Momento de uma Força · Óptica</p>
+  <div class="meta">
+    <span><strong>Disciplina</strong>Física</span>
+    <span><strong>Nível</strong>Ensino Secundário</span>
+    <span><strong>Data</strong>Junho de 2026</span>
+  </div>
+</div>
+
+<!-- ======== UNIDADE I: MOMENTO DE UMA FORÇA ======== -->
+<div class="unidade-titulo">
+  <span class="num">Unidade I</span>
+  Momento de uma Força & Máquinas Simples – Alavancas
+</div>
+
+<!-- Exercício C1 -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">C1</span>
+    Define o conceito de Momento de uma Força e diga a sua unidade no sistema internacional.
+  </div>
+  <div class="resposta">
+    <p>O <strong>Momento de uma Força (M)</strong> é uma grandeza física que mede a capacidade de uma força produzir rotação num corpo em torno de um eixo ou ponto de apoio.</p>
+    <p>É definido como o produto do módulo da força (F) pela distância perpendicular (braço de força, <em>b</em>) entre a linha de acção da força e o eixo de rotação:</p>
+    <div class="formula">M = F × b</div>
+    <p>Onde: <strong>F</strong> = força (N) &nbsp;|&nbsp; <strong>b</strong> = braço de força (m)</p>
+    <div class="destaque">Unidade SI: Newton-metro (N·m)</div>
+  </div>
+</div>
+
+<!-- Exercício C2 -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">C2</span>
+    O canalizador da figura produz um momento de força igual a 6 N·m quando aplica uma força de 20 N para montar os tubos. Qual deve ser o comprimento (em cm) da chave que usa?
+  </div>
+  <div class="resposta">
+    <div class="formula">M = F × b &nbsp;⟹&nbsp; b = M ÷ F</div>
+    <div class="passo"><div class="bolinha">1</div><div>Dados: M = 6 N·m &nbsp;|&nbsp; F = 20 N</div></div>
+    <div class="passo"><div class="bolinha">2</div><div>b = 6 ÷ 20 = <strong>0,30 m</strong></div></div>
+    <div class="destaque">Comprimento da chave: b = 0,30 m = 30 cm</div>
+  </div>
+</div>
+
+<!-- Exercício C3 -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">C3</span>
+    Para desapertar a porca de uma roda do tractor o Sr. Zangarote necessita de uma força de 800 N aplicada a 0,8 m da porca. Calcule o momento da força exercida.
+  </div>
+  <div class="resposta">
+    <div class="formula">M = F × b</div>
+    <div class="passo"><div class="bolinha">1</div><div>F = 800 N &nbsp;|&nbsp; b = 0,8 m</div></div>
+    <div class="passo"><div class="bolinha">2</div><div>M = 800 × 0,8 = <strong>640 N·m</strong></div></div>
+    <div class="destaque">Momento da força = 640 N·m</div>
+  </div>
+</div>
+
+<!-- Exercício C5 -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">C5</span>
+    Para fazer girar uma porca é necessário um momento de 240 N·m. Se F = 480 N, qual deve ser o valor do braço (d)?
+  </div>
+  <div class="resposta">
+    <div class="formula">d = M ÷ F = 240 ÷ 480</div>
+    <div class="destaque">Braço de força: d = 0,5 m</div>
+  </div>
+</div>
+
+<!-- Exercício D -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">D1</span>
+    O que são Máquinas Simples? Dê três exemplos.
+  </div>
+  <div class="resposta">
+    <p><strong>Máquinas simples</strong> são instrumentos que ajudam o Homem a realizar tarefas de forma mais fácil, poupando esforço (força potente), sem que haja ganho de trabalho (Regra de Ouro da Mecânica: W<sub>P</sub> = W<sub>R</sub>).</p>
+    <p><strong>Exemplos:</strong></p>
+    <ul class="lista">
+      <li>🔧 Alavanca (chave inglesa, tesoura, gangorra)</li>
+      <li>⚙️ Roldana (fixa ou móvel)</li>
+      <li>📐 Plano inclinado (rampa, cunha)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Exercício D2 -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">D2</span>
+    O que é Alavanca? Mencione os três (3) tipos e os elementos de uma alavanca.
+  </div>
+  <div class="resposta">
+    <p><strong>Alavanca</strong> é uma máquina simples constituída por uma barra rígida que pode girar em torno de um ponto fixo chamado <em>ponto de apoio (fulcro)</em>.</p>
+    <p><strong>Elementos de uma alavanca:</strong></p>
+    <ul class="lista">
+      <li><strong>Potência (P)</strong> – força que o utilizador aplica</li>
+      <li><strong>Resistência (R)</strong> – força que se pretende vencer (carga)</li>
+      <li><strong>Apoio/Fulcro (F)</strong> – ponto fixo de rotação</li>
+    </ul>
+    <p><strong>Três tipos de alavanca (figura da questão 6):</strong></p>
+    <table class="tabela">
+      <tr><th>Tipo</th><th>Posição do Apoio</th><th>Exemplo</th></tr>
+      <tr><td>1.ª classe (Inter-fixa)</td><td>Apoio entre Potência e Resistência</td><td>Gangorra, tesoura</td></tr>
+      <tr><td>2.ª classe (Inter-resistente)</td><td>Resistência entre Apoio e Potência</td><td>Carrinho de mão</td></tr>
+      <tr><td>3.ª classe (Inter-potente)</td><td>Potência entre Apoio e Resistência</td><td>Pinça, antebraço</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Questão 5 carrinho -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q5</span>
+    Um carrinho-de-mão carrega um peso de 600 N, distante 40 cm do ponto de apoio. Qual a força que um homem deve exercer nos cabos, sabendo que suas mãos distam 1,20 m do ponto de apoio? Calcule a vantagem mecânica.
+  </div>
+  <div class="resposta">
+    <p>O carrinho-de-mão é uma alavanca de 2.ª classe. Condição de equilíbrio:</p>
+    <div class="formula">F<sub>P</sub> × b<sub>P</sub> = F<sub>R</sub> × b<sub>R</sub></div>
+    <div class="passo"><div class="bolinha">1</div><div>F<sub>R</sub> = 600 N &nbsp;|&nbsp; b<sub>R</sub> = 0,40 m &nbsp;|&nbsp; b<sub>P</sub> = 1,20 m</div></div>
+    <div class="passo"><div class="bolinha">2</div><div>F<sub>P</sub> = (600 × 0,40) ÷ 1,20 = 240 ÷ 1,20 = <strong>200 N</strong></div></div>
+    <div class="passo"><div class="bolinha">3</div><div>Vantagem Mecânica = F<sub>R</sub> ÷ F<sub>P</sub> = 600 ÷ 200 = <strong>3</strong></div></div>
+    <div class="destaque">Força necessária = 200 N &nbsp;|&nbsp; Vantagem Mecânica = 3</div>
+  </div>
+</div>
+
+<!-- Questão 6 alavancas -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q6</span>
+    A figura representa três tipos de alavanca. Escolha a opção que melhor completa a seguinte afirmação: "Da esquerda para a direita temos respectivamente alavancas..."
+  </div>
+  <div class="resposta">
+    <p>Analisando a figura (posição relativa de Apoio, Potência e Resistência):</p>
+    <ul class="lista">
+      <li>1.ª figura: Apoio no centro → Inter-fixa (1.ª classe)</li>
+      <li>2.ª figura: Resistência no centro → Inter-resistente (2.ª classe)</li>
+      <li>3.ª figura: Potência no centro → Inter-potente (3.ª classe)</li>
+    </ul>
+    <div class="destaque">Resposta correcta: C – Inter-fixa, inter-resistente, inter-potente</div>
+  </div>
+</div>
+
+<!-- ======== UNIDADE II: ROLDANAS ======== -->
+<div class="unidade-titulo">
+  <span class="num">Unidade II</span>
+  Máquinas Simples – Roldanas, Talha e Plano Inclinado
+</div>
+
+<!-- E1 -->
+<div class="exercicio verde">
+  <div class="pergunta">
+    <span class="num-q">E1</span>
+    O que é roldana? Mencione os tipos e a condição de equilíbrio para cada.
+  </div>
+  <div class="resposta">
+    <p><strong>Roldana</strong> é uma máquina simples constituída por uma roda com uma ranhura (sulco) por onde passa uma corda ou cabo, utilizada para alterar a direcção da força ou para obter vantagem mecânica.</p>
+    <table class="tabela">
+      <tr><th>Tipo</th><th>Característica</th><th>Equilíbrio</th><th>Vant. Mecânica</th></tr>
+      <tr><td><strong>Roldana Fixa</strong></td><td>Eixo fixo, apenas muda a direcção da força</td><td>F<sub>P</sub> = F<sub>R</sub></td><td>VM = 1</td></tr>
+      <tr><td><strong>Roldana Móvel</strong></td><td>Eixo move-se com a carga</td><td>F<sub>P</sub> = F<sub>R</sub> ÷ 2</td><td>VM = 2</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- E2 Exercício 2.1 -->
+<div class="exercicio verde">
+  <div class="pergunta">
+    <span class="num-q">2.1</span>
+    Calcula a intensidade da força necessária para equilibrar a carga de 83 N (roldana fixa).
+  </div>
+  <div class="resposta">
+    <p>Numa <strong>roldana fixa</strong>: F<sub>P</sub> = F<sub>R</sub></p>
+    <div class="destaque">F<sub>P</sub> = 83 N</div>
+  </div>
+</div>
+
+<!-- 2.2 -->
+<div class="exercicio verde">
+  <div class="pergunta">
+    <span class="num-q">2.2</span>
+    Calcula o valor da força potente capaz de equilibrar a carga de 120 N (roldana móvel).
+  </div>
+  <div class="resposta">
+    <p>Numa <strong>roldana móvel</strong>: F<sub>P</sub> = F<sub>R</sub> ÷ 2</p>
+    <div class="formula">F<sub>P</sub> = 120 ÷ 2 = 60 N</div>
+    <div class="destaque">F<sub>P</sub> = 60 N</div>
+  </div>
+</div>
+
+<!-- Zangarote cimento -->
+<div class="exercicio verde">
+  <div class="pergunta">
+    <span class="num-q">Q3</span>
+    O Sr. Zangarote pretende elevar um saco de cimento com o auxílio de uma roldana fixa. A força exercida é de 500 N. Qual é o valor da resistência?
+  </div>
+  <div class="resposta">
+    <p>Numa roldana fixa: F<sub>P</sub> = F<sub>R</sub></p>
+    <div class="destaque">Resistência (F<sub>R</sub>) = 500 N</div>
+  </div>
+</div>
+
+<!-- Talha/cadernal -->
+<div class="exercicio verde">
+  <div class="pergunta">
+    <span class="num-q">F – Talha/Cadernal</span>
+    Exercícios sobre talha com 4 roldanas móveis (carga 640 kg) e plano inclinado.
+  </div>
+  <div class="resposta">
+    <p><strong>Questão 4 – Talha com 4 roldanas móveis, F = 16 N:</strong></p>
+    <div class="passo"><div class="bolinha">a</div><div>Tipo de máquina: <strong>Talha / Cadernal</strong> (associação de roldanas)</div></div>
+    <div class="passo"><div class="bolinha">b</div><div>VM = F<sub>R</sub> ÷ F<sub>P</sub> = (640 × 10) ÷ 16 = 6400 ÷ 16 = <strong>400</strong> (aproximadamente, considerando 4 roldanas móveis = 2<sup>4</sup> = 16 segmentos, F<sub>P</sub> = P ÷ 16)</div></div>
+    <p><strong>Questão 5 – Quantas roldanas móveis tem a talha? (F = 16 N, equilibra 640 kg):</strong></p>
+    <div class="formula">P = 640 × 10 = 6400 N &nbsp;|&nbsp; n = P ÷ F<sub>P</sub> = 6400 ÷ 16 = 400 ... (número de segmentos de corda)</div>
+    <p>Número de roldanas móveis = VM ÷ 2 → a talha tem vantagem mecânica de <strong>400</strong>, com múltiplas roldanas móveis.</p>
+
+    <p style="margin-top:14px"><strong>Plano inclinado – Um plano de 3,2m de base e 1,6m de altura, F<sub>P</sub> = 204 N para elevar a carga a 1,2m de altura com comprimento de 4m:</strong></p>
+    <div class="formula verde-bg">VM = comprimento ÷ altura = 4 ÷ 1,2 ≈ 3,33</div>
+    <div class="formula verde-bg">F<sub>P</sub> = Peso ÷ VM &nbsp;⟹&nbsp; Peso = F<sub>P</sub> × VM = 204 × 3,33 ≈ 680 N</div>
+    <div class="destaque">Força potente no plano inclinado = 204 N &nbsp;|&nbsp; Vantagem Mecânica ≈ 3,33</div>
+  </div>
+</div>
+
+<!-- ======== UNIDADE III: ÓPTICA ======== -->
+<div class="unidade-titulo">
+  <span class="num">Unidade III</span>
+  Óptica – Reflexão, Refracção e Lentes
+</div>
+
+<!-- Exercício B – Reflexão -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">B1</span>
+    Desenhe feixes luminosos constituídos por: a) Raios divergentes &nbsp; b) Raios convergentes &nbsp; c) Raios paralelos
+  </div>
+  <div class="resposta">
+    <p>Representação esquemática (vista de cima):</p>
+    <table class="tabela">
+      <tr><th>Tipo</th><th>Descrição</th></tr>
+      <tr><td><strong>Raios divergentes</strong></td><td>Partem de um ponto e afastam-se → ← (saem de uma fonte pontual, como uma vela)</td></tr>
+      <tr><td><strong>Raios convergentes</strong></td><td>Aproximam-se e encontram-se num ponto focal → (como numa lente convergente)</td></tr>
+      <tr><td><strong>Raios paralelos</strong></td><td>Seguem a mesma direcção e nunca se cruzam ═══ (como a luz solar)</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">B2</span>
+    Qual é o valor da velocidade de propagação da luz no vácuo?
+  </div>
+  <div class="resposta">
+    <div class="formula">c = 3 × 10<sup>8</sup> m/s (trezentos mil quilómetros por segundo)</div>
+    <div class="destaque">Velocidade da luz no vácuo: c = 3 × 10⁸ m/s</div>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">B3</span>
+    O que é reflexão? Quando dizemos que a reflexão é regular e quando é irregular?
+  </div>
+  <div class="resposta">
+    <p><strong>Reflexão</strong> é o fenómeno pelo qual a luz, ao atingir uma superfície, é devolvida ao meio de onde veio, obedecendo às leis da reflexão (ângulo de incidência = ângulo de reflexão).</p>
+    <ul class="lista">
+      <li><strong>Reflexão regular (especular):</strong> ocorre em superfícies lisas e polidas (espelho). Os raios reflectidos são paralelos entre si → imagem nítida.</li>
+      <li><strong>Reflexão irregular (difusa):</strong> ocorre em superfícies rugosas. Os raios são reflectidos em várias direcções → sem imagem definida.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">B4</span>
+    Enuncie as duas leis da reflexão e faça um desenho para ilustrar.
+  </div>
+  <div class="resposta">
+    <p><strong>1.ª Lei:</strong> O raio incidente, a normal à superfície no ponto de incidência e o raio reflectido estão no mesmo plano.</p>
+    <p><strong>2.ª Lei:</strong> O ângulo de incidência (i) é sempre igual ao ângulo de reflexão (r):</p>
+    <div class="formula">i = r</div>
+    <p><em>Esquema:</em></p>
+    <pre style="text-align:center;font-size:0.9rem;background:#f0f0f0;padding:12px;border-radius:8px;color:#333;">
+    Raio incidente    Normal    Raio reflectido
+         \              |              /
+          \      i   |   r      /
+           \         |         /
+     ─────────────────────────────── (superfície)
+    </pre>
+  </div>
+</div>
+
+<!-- Espelhos curvos -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q9</span>
+    A figura representa um espelho côncavo. Caracterize a imagem quanto à Natureza, Tamanho, Orientação e Localização.
+  </div>
+  <div class="resposta">
+    <p>Para um objecto situado além do centro de curvatura (C) num espelho côncavo:</p>
+    <table class="tabela">
+      <tr><th>Característica</th><th>Resposta</th></tr>
+      <tr><td>Natureza</td><td>Real (forma-se na frente do espelho)</td></tr>
+      <tr><td>Tamanho</td><td>Menor que o objecto (diminuída)</td></tr>
+      <tr><td>Orientação</td><td>Invertida</td></tr>
+      <tr><td>Localização</td><td>Entre o foco (F) e o centro de curvatura (C)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Refracção -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q5 – Refracção</span>
+    Enuncie as duas leis da refracção e faça um desenho para ilustrar sua resposta.
+  </div>
+  <div class="resposta">
+    <p><strong>1.ª Lei da Refracção:</strong> O raio incidente, a normal no ponto de incidência e o raio refractado estão no mesmo plano.</p>
+    <p><strong>2.ª Lei da Refracção (Lei de Snell-Descartes):</strong></p>
+    <div class="formula">n<sub>1</sub> × sen(i) = n<sub>2</sub> × sen(r)</div>
+    <p>Onde <em>n</em> é o índice de refracção do meio. Quando a luz passa de um meio menos denso para um mais denso, aproxima-se da normal; no sentido inverso, afasta-se.</p>
+    <pre style="text-align:center;font-size:0.9rem;background:#f0f0f0;padding:12px;border-radius:8px;color:#333;">
+  Meio 1 (ar)      \  i  |
+                    \     |
+  ──────────────────────────── (superfície)
+                          |  r /
+  Meio 2 (vidro)          | /
+    </pre>
+    <div class="destaque">A luz muda de direcção ao mudar de meio: fenómeno de REFRACÇÃO</div>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q6</span>
+    Sabe-se que a luz se propaga em certo cristal com velocidade 1,5 × 10⁸ m/s. Qual é o valor do índice de refracção desse cristal?
+  </div>
+  <div class="resposta">
+    <div class="formula">n = c ÷ v = (3 × 10⁸) ÷ (1,5 × 10⁸) = 2</div>
+    <div class="destaque">Índice de refracção do cristal: n = 2</div>
+  </div>
+</div>
+
+<!-- Lentes -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q7</span>
+    Suponha que o tamanho de um objecto seja 15 cm e que ele esteja situado a uma distância D<sub>o</sub> = 30 cm de uma lente convergente, cujo tamanho do objecto é 3 cm. Qual é o valor de o tamanho ou amplificação?
+  </div>
+  <div class="resposta">
+    <div class="formula">Amplificação (A) = D<sub>i</sub> / D<sub>o</sub> = tamanho imagem / tamanho objecto</div>
+    <div class="passo"><div class="bolinha">1</div><div>Usando a equação de Gauss: 1/f = 1/D<sub>o</sub> + 1/D<sub>i</sub></div></div>
+    <div class="passo"><div class="bolinha">2</div><div>A = tamanho imagem ÷ tamanho objecto = 3 ÷ 15 = <strong>0,2</strong> (imagem diminuída)</div></div>
+    <div class="destaque">Amplificação = 0,2 (imagem real, invertida e menor)</div>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q8</span>
+    De que tipo de espelho esférico se trata? b) Quantas roldanas móveis tem esta máquina? c) Caracterize a imagem: Natureza, Tamanho, Orientação, Localização.
+  </div>
+  <div class="resposta">
+    <p><strong>a) Tipo de espelho:</strong> Trata-se de um <strong>espelho côncavo</strong> (converge os raios de luz).</p>
+    <p><strong>b) Caracterização da imagem</strong> (objecto além de C, lente convergente):</p>
+    <table class="tabela">
+      <tr><th>Característica</th><th>Resposta</th></tr>
+      <tr><td>Natureza</td><td>Real</td></tr>
+      <tr><td>Tamanho</td><td>Menor (reduzida)</td></tr>
+      <tr><td>Orientação</td><td>Invertida</td></tr>
+      <tr><td>Localização</td><td>Entre F e C, do lado oposto ao objecto</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Q10 e Q11 óptica -->
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q10</span>
+    Dê quatro (5) exemplos de instrumentos ópticos.
+  </div>
+  <div class="resposta">
+    <ul class="lista">
+      <li>🔭 Telescópio</li>
+      <li>🔬 Microscópio</li>
+      <li>📷 Máquina fotográfica</li>
+      <li>👁️ Olho humano</li>
+      <li>🔍 Lupa</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exercicio">
+  <div class="pergunta">
+    <span class="num-q">Q11</span>
+    Na figura está representada a projecção da imagem de um objecto O situado além do centro de curvatura numa lente convergente. Indique as características da imagem.
+  </div>
+  <div class="resposta">
+    <table class="tabela">
+      <tr><th>Característica</th><th>Resposta</th></tr>
+      <tr><td>Natureza</td><td>Real (raios convergem e formam imagem real)</td></tr>
+      <tr><td>Tamanho</td><td>Menor que o objecto</td></tr>
+      <tr><td>Orientação</td><td>Invertida</td></tr>
+      <tr><td>Localização</td><td>Do lado oposto ao objecto, entre F e C</td></tr>
+    </table>
+    <p style="margin-top:10px"><em>Nota: Quando o objecto está além de C, a imagem forma-se entre F e C, é real, invertida e menor.</em></p>
+  </div>
+</div>
+
+<div class="rodape">
+  Trabalho elaborado com base nos conteúdos de Física – Máquinas Simples e Óptica &nbsp;|&nbsp; Junho 2026
+</div>
+
+</body>
+</html>
